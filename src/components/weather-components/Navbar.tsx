@@ -1,4 +1,5 @@
-import { IoSearch, IoMoon, IoSunny } from "react-icons/io5";
+import { Link } from "react-router-dom";
+import { IoSearch, IoMoon, IoSunny, IoArrowBack } from "react-icons/io5";
 import { useTheme } from "../../context/ThemeContext";
 import type { TemperatureUnit } from "../../types/weather";
 
@@ -13,12 +14,24 @@ const Navbar = ({ onSearchOpen, unit, onUnitToggle }: NavbarProps) => {
 
   return (
     <header className="flex flex-row justify-between items-center px-6 md:px-10 py-5">
-      {/* Brand */}
-      <h1 className="text-xl md:text-2xl font-newsreader tracking-widest uppercase text-brand-dark dark:text-white select-none">
-        The Atmosphere
-      </h1>
+      {/* Left side: Back to SKLD + Brand */}
+      <div className="flex items-center gap-3 md:gap-5">
+        <Link
+          to="/"
+          aria-label="Back to SKLD"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-brand-border dark:border-white/15 text-xs font-poppins font-medium text-brand-dark dark:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors group"
+        >
+          <IoArrowBack className="text-sm transition-transform group-hover:-translate-x-0.5" />
+          <span className="hidden sm:inline">Back to SKLD</span>
+          <span className="sm:hidden">SKLD</span>
+        </Link>
 
-      {/* Controls */}
+        <h1 className="text-xl md:text-2xl font-newsreader tracking-widest uppercase text-brand-dark dark:text-white select-none">
+          The Atmosphere
+        </h1>
+      </div>
+
+      {/* Right side: Controls */}
       <nav className="flex items-center gap-2 md:gap-3">
         {/* Unit toggle */}
         <button
