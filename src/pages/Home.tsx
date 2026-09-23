@@ -1,13 +1,13 @@
-import Navbar from "../components/Navbar";
-import Hero from "../components/Hero";
-import TrustedOrgs from "../components/TrustedOrgs";
-import Solutions from "../components/Solutions";
-import Trust from "../components/Trust";
-import Purpose from "../components/Purpose";
-import Testimonials from "../components/Testimonials";
-import Insights from "../components/Insights";
-import TalkToTeam from "../components/TalkToTeam";
 import Footer from "../components/Footer";
+import Hero from "../components/Hero";
+import Insights from "../components/Insights";
+import Navbar from "../components/Navbar";
+import Purpose from "../components/Purpose";
+import Solutions from "../components/Solutions";
+import TalkToTeam from "../components/TalkToTeam";
+import Testimonials from "../components/Testimonials";
+import Trust from "../components/Trust";
+import TrustedOrgs from "../components/TrustedOrgs";
 
 const Home = () => {
   return (

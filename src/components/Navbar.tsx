@@ -12,27 +12,29 @@ const Navbar = () => {
       <img src={logo} alt="SKLD logo" className="h-8 w-auto" />
 
       <nav className="flex flex-row gap-1">
-        {[
-          { label: "Home" },
-          { label: "About" },
-          { label: "Blog" },
-        ].map(({ label }) => (
-          <a
-            key={label}
-            href="#"
-            className="bg-black dark:bg-[#1c1d24] text-white no-underline px-4 py-[14px] transition-colors duration-200 hover:bg-white hover:text-black dark:hover:bg-white dark:hover:text-black text-sm"
-          >
-            {label}
-          </a>
-        ))}
+        {[{ label: "Home" }, { label: "About" }, { label: "Blog" }].map(
+          ({ label }) => (
+            <a
+              key={label}
+              href="#"
+              className="bg-black dark:bg-[#1c1d24] text-white no-underline px-4 py-[14px] transition-colors duration-200 hover:bg-white hover:text-black dark:hover:bg-white dark:hover:text-black text-sm"
+            >
+              {label}
+            </a>
+          ),
+        )}
+        <a
+          href="/weather"
+          className="bg-black dark:bg-[#1c1d24] text-white no-underline px-4 py-[14px] transition-colors duration-200 hover:bg-white hover:text-black dark:hover:bg-white dark:hover:text-black text-sm"
+        >
+          Weather
+        </a>
         <a
           href="#"
           className="bg-black dark:bg-[#1c1d24] text-white no-underline px-4 py-[14px] transition-colors duration-200 hover:bg-white hover:text-black dark:hover:bg-white dark:hover:text-black text-sm flex flex-row items-center gap-2"
         >
           Brands{" "}
-          <span className="text-white text-[8px] leading-none">
-            &#x25BC;
-          </span>
+          <span className="text-white text-[8px] leading-none">&#x25BC;</span>
         </a>
       </nav>
 
@@ -40,8 +42,12 @@ const Navbar = () => {
         <button
           type="button"
           onClick={toggleTheme}
-          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-          title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          aria-label={
+            theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+          }
+          title={
+            theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+          }
           className="relative inline-flex items-center justify-center w-11 h-11 rounded-full bg-black/60 dark:bg-white/10 text-white hover:bg-white hover:text-black dark:hover:bg-white dark:hover:text-black transition-all duration-200 border border-white/10 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
         >
           {theme === "dark" ? (

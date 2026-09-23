@@ -7,6 +7,7 @@ export default {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
         lato: ["Lato", "sans-serif"],
+        newsreader: ["Newsreader", "sans-serif"],
       },
       colors: {
         brand: {
@@ -19,6 +20,7 @@ export default {
           "gray-mid": "#f5f5f5",
           muted: "#333333",
           border: "#e7e7e7",
+          cream: "#F8FBEC",
         },
       },
       borderRadius: {
@@ -30,9 +32,22 @@ export default {
       spacing: {
         "section-x": "150px",
         "section-y": "100px",
-        "18": "72px",
+        18: "72px",
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // Utility to hide scrollbars on the hourly forecast strip
+    function ({ addUtilities }) {
+      addUtilities({
+        ".scrollbar-hide": {
+          "-ms-overflow-style": "none",
+          "scrollbar-width": "none",
+        },
+        ".scrollbar-hide::-webkit-scrollbar": {
+          display: "none",
+        },
+      });
+    },
+  ],
 };
