@@ -1,0 +1,124 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  margin: 12px;
+  background-color: #f7f7f7;
+  color: #1c1c1c;
+  transition:
+    background-color 300ms ease,
+    color 300ms ease;
+}
+
+.dark body {
+  background-color: #0f1015;
+  color: #f3f4f6;
+}
+
+/* ── Solution card hover effect ── */
+.solution-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  cursor: pointer;
+  outline: none;
+}
+
+.solution-card::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  transition: background-color 350ms ease;
+}
+
+.solution-card > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 350ms ease;
+}
+
+.solution-hover {
+  position: absolute;
+  right: 8px;
+  bottom: -100%;
+  left: 8px;
+  z-index: 2;
+  min-height: 212px;
+  padding: 24px 20px 84px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  background-color: #ffffff;
+  color: #1c1c1c;
+  transition:
+    bottom 350ms ease,
+    background-color 300ms ease,
+    color 300ms ease;
+}
+
+.dark .solution-hover {
+  background-color: #1f2028;
+  color: #ffffff;
+}
+
+.solution-card:hover .solution-hover,
+.solution-card:focus-visible .solution-hover {
+  bottom: 8px;
+}
+
+.solution-card:hover::before,
+.solution-card:focus-visible::before {
+  background-color: rgb(0 0 0 / 38%);
+}
+
+.solution-card:hover > img,
+.solution-card:focus-visible > img {
+  transform: scale(1.02);
+}
+
+.solution-card:focus-visible {
+  box-shadow: 0 0 0 3px #011fbd;
+}
+
+/* ── Testimonial blur overlays ── */
+.testimonial-blur {
+  position: absolute;
+  z-index: 2;
+  width: 800px;
+  height: 800px;
+  background: #ffffff;
+  filter: blur(50px);
+  pointer-events: none;
+  transition: background-color 300ms ease;
+}
+
+.dark .testimonial-blur {
+  background: #181920;
+}
+
+.testimonial-blur--center {
+  left: calc(50% - 400px);
+  top: 72%;
+}
+
+.testimonial-blur--right {
+  left: calc(50% - 30px);
+  top: 72%;
+  z-index: 3;
+}
+
+.testimonial-blur--left {
+  left: calc(50% - 830px);
+  top: calc(72% - 20px);
+  z-index: 4;
+}
