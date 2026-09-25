@@ -1,4 +1,8 @@
-import type { CurrentWeatherData, TemperatureUnit } from "../../types/weather";
+import type {
+  CurrentWeatherData,
+  DetailedConditionsData,
+  TemperatureUnit,
+} from "../../types/weather";
 import {
   IoWaterOutline,
   IoSpeedometerOutline,
@@ -9,8 +13,9 @@ import {
 } from "react-icons/io5";
 
 interface WeatherDetailsProps {
-  current: CurrentWeatherData;
-  unit: TemperatureUnit;
+  current?: CurrentWeatherData;
+  detailsData?: DetailedConditionsData;
+  unit?: TemperatureUnit;
   sunrise?: string;
   sunset?: string;
 }
@@ -46,49 +51,57 @@ function getUVColor(uv: number): string {
 
 const WeatherDetails = ({
   current,
+  detailsData,
   sunrise,
   sunset,
 }: WeatherDetailsProps) => {
+  const data = detailsData || current;
+  if (!data) return null;
+
+  const precipLabel =
+    detailsData?.precipitationLabel ??
+    (data.precipitation === 0 ? "None" : "Today");
+
   const details = [
     {
       icon: <IoWaterOutline className="text-xl" />,
       label: "Humidity",
-      value: `${current.relative_humidity_2m}%`,
-      sub: current.relative_humidity_2m > 70 ? "High" : current.relative_humidity_2m > 40 ? "Moderate" : "Low",
+      value: `${Math.round(data.relative_humidity_2m)}%`,
+      sub: data.relative_humidity_2m > 70 ? "High" : data.relative_humidity_2m > 40 ? "Moderate" : "Low",
     },
     {
       icon: <IoNavigateOutline className="text-xl" />,
       label: "Wind",
-      value: `${Math.round(current.wind_speed_10m)} km/h`,
-      sub: getWindDirection(current.wind_direction_10m),
+      value: `${Math.round(data.wind_speed_10m)} km/h`,
+      sub: getWindDirection(data.wind_direction_10m),
     },
     {
       icon: <IoSpeedometerOutline className="text-xl" />,
       label: "Pressure",
-      value: `${Math.round(current.surface_pressure)}`,
+      value: `${Math.round(data.surface_pressure)}`,
       sub: "hPa",
     },
     {
       icon: <IoEyeOutline className="text-xl" />,
       label: "Visibility",
       value:
-        current.visibility >= 1000
-          ? `${(current.visibility / 1000).toFixed(1)} km`
-          : `${current.visibility} m`,
-      sub: current.visibility >= 10000 ? "Clear" : current.visibility >= 5000 ? "Good" : "Limited",
+        data.visibility >= 1000
+          ? `${(data.visibility / 1000).toFixed(1)} km`
+          : `${Math.round(data.visibility)} m`,
+      sub: data.visibility >= 10000 ? "Clear" : data.visibility >= 5000 ? "Good" : "Limited",
     },
     {
       icon: <IoSunnyOutline className="text-xl" />,
       label: "UV Index",
-      value: `${Math.round(current.uv_index)}`,
-      sub: getUVLabel(current.uv_index),
-      subClass: getUVColor(current.uv_index),
+      value: `${Math.round(data.uv_index)}`,
+      sub: getUVLabel(data.uv_index),
+      subClass: getUVColor(data.uv_index),
     },
     {
       icon: <IoUmbrellaOutline className="text-xl" />,
       label: "Precipitation",
-      value: `${current.precipitation} mm`,
-      sub: current.precipitation === 0 ? "None" : "Today",
+      value: `${data.precipitation} mm`,
+      sub: precipLabel,
     },
   ];
 

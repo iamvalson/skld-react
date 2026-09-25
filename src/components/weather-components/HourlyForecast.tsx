@@ -5,7 +5,9 @@ import type { HourlyWeatherData, TemperatureUnit } from "../../types/weather";
 interface HourlyForecastProps {
   hourly: HourlyWeatherData;
   unit: TemperatureUnit;
-  currentTime: string;
+  currentTime?: string;
+  selectedDate?: string;
+  title?: string;
 }
 
 function formatHour(isoTime: string): string {
@@ -16,24 +18,44 @@ function formatHour(isoTime: string): string {
   return h > 12 ? `${h - 12}pm` : `${h}am`;
 }
 
-const HourlyForecast = ({ hourly, unit, currentTime }: HourlyForecastProps) => {
+const HourlyForecast = ({
+  hourly,
+  unit,
+  currentTime,
+  selectedDate,
+  title,
+}: HourlyForecastProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const unitSymbol = unit === "celsius" ? "°" : "°";
 
-  // Show 24 hours starting from current hour
-  const now = new Date(currentTime);
-  const startIndex = hourly.time.findIndex((t) => new Date(t) >= now);
-  const sliceStart = startIndex === -1 ? 0 : startIndex;
-  const times = hourly.time.slice(sliceStart, sliceStart + 24);
-  const temps = hourly.temperature_2m.slice(sliceStart, sliceStart + 24);
-  const codes = hourly.weather_code.slice(sliceStart, sliceStart + 24);
-  const precips = hourly.precipitation_probability.slice(sliceStart, sliceStart + 24);
-  const isDays = hourly.is_day.slice(sliceStart, sliceStart + 24);
+  let indices: number[] = [];
+
+  if (selectedDate) {
+    indices = hourly.time
+      .map((t, idx) => (t.startsWith(selectedDate) ? idx : -1))
+      .filter((idx) => idx !== -1);
+  }
+
+  // Fallback if no specific date or not found: slice 24 hours from currentTime
+  if (indices.length === 0) {
+    const now = currentTime ? new Date(currentTime) : new Date();
+    const startIndex = hourly.time.findIndex((t) => new Date(t) >= now);
+    const sliceStart = startIndex === -1 ? 0 : startIndex;
+    indices = Array.from({ length: Math.min(24, hourly.time.length - sliceStart) }, (_, i) => sliceStart + i);
+  }
+
+  const times = indices.map((i) => hourly.time[i]);
+  const temps = indices.map((i) => hourly.temperature_2m[i]);
+  const codes = indices.map((i) => hourly.weather_code[i]);
+  const precips = indices.map((i) => hourly.precipitation_probability[i]);
+  const isDays = indices.map((i) => hourly.is_day[i]);
+
+  const displayTitle = title || (selectedDate ? "Hourly Forecast" : "Next 24 Hours");
 
   return (
     <section className="px-6 md:px-10 pb-10">
       <h3 className="text-xs font-poppins uppercase tracking-widest text-brand-dark/40 dark:text-white/30 mb-5">
-        Next 24 Hours
+        {displayTitle}
       </h3>
 
       <div

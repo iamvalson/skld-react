@@ -30,6 +30,14 @@ export interface HourlyWeatherData {
   weather_code: number[];
   precipitation_probability: number[];
   is_day: number[];
+  apparent_temperature?: number[];
+  relative_humidity_2m?: number[];
+  precipitation?: number[];
+  wind_speed_10m?: number[];
+  wind_direction_10m?: number[];
+  surface_pressure?: number[];
+  visibility?: number[];
+  uv_index?: number[];
 }
 
 export interface DailyWeatherData {
@@ -40,6 +48,12 @@ export interface DailyWeatherData {
   precipitation_probability_max: number[];
   sunrise: string[];
   sunset: string[];
+  apparent_temperature_max?: number[];
+  apparent_temperature_min?: number[];
+  precipitation_sum?: number[];
+  wind_speed_10m_max?: number[];
+  wind_direction_10m_dominant?: number[];
+  uv_index_max?: number[];
 }
 
 export interface WeatherResponse {
@@ -48,6 +62,17 @@ export interface WeatherResponse {
   daily: DailyWeatherData;
   timezone: string;
   timezone_abbreviation: string;
+}
+
+export interface DetailedConditionsData {
+  relative_humidity_2m: number;
+  wind_speed_10m: number;
+  wind_direction_10m: number;
+  surface_pressure: number;
+  visibility: number;
+  uv_index: number;
+  precipitation: number;
+  precipitationLabel?: string;
 }
 
 export type TemperatureUnit = "celsius" | "fahrenheit";
